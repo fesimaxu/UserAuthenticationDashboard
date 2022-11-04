@@ -27,18 +27,24 @@ class UserAuth extends Dbh{
     }
 
     public function login($email, $password){
+        $this->db = new Dbh();
+
+        $this->db->connect();
         $conn = $this->db->connect();
         $sql = "SELECT * FROM Students WHERE email='$email' AND `password`='$password'";
         $result = $conn->query($sql);
         if($result->num_rows > 0){
             $_SESSION['email'] = $email;
-            header("Location: ../dashboard.php");
+            header("Location: dashboard.php");
         } else {
             header("Location: forms/login.php");
         }
     }
 
     public function getUser($username){
+        $this->db = new Dbh();
+
+        $this->db->connect();
         $conn = $this->db->connect();
         $sql = "SELECT * FROM users WHERE username = '$username'";
         $result = $conn->query($sql);
@@ -50,6 +56,9 @@ class UserAuth extends Dbh{
     }
 
     public function getAllUsers(){
+        $this->db = new Dbh();
+
+        $this->db->connect();
         $conn = $this->db->connect();
         $sql = "SELECT * FROM Students";
         $result = $conn->query($sql);
@@ -85,6 +94,9 @@ class UserAuth extends Dbh{
     }
 
     public function deleteUser($id){
+        $this->db = new Dbh();
+
+        $this->db->connect();
         $conn = $this->db->connect();
         $sql = "DELETE FROM Students WHERE id = '$id'";
         if($conn->query($sql) === TRUE){
@@ -95,16 +107,22 @@ class UserAuth extends Dbh{
     }
 
     public function updateUser($username, $password){
+        $this->db = new Dbh();
+
+        $this->db->connect();
         $conn = $this->db->connect();
         $sql = "UPDATE users SET password = '$password' WHERE username = '$username'";
         if($conn->query($sql) === TRUE){
-            header("Location: ../dashboard.php?update=success");
+            header("Location: dashboard.php?update=success");
         } else {
             header("Location: forms/resetpassword.php?error=1");
         }
     }
 
     public function getUserByUsername($username){
+        $this->db = new Dbh();
+
+        $this->db->connect();
         $conn = $this->db->connect();
         $sql = "SELECT * FROM users WHERE username = '$username'";
         $result = $conn->query($sql);
@@ -115,10 +133,10 @@ class UserAuth extends Dbh{
         }
     }
 
-    public function logout($username){
+    public function logout($email){
         session_start();
         session_destroy();
-        header('Location: index.php');
+        header("Location:index.php");
     }
 
     public function confirmPasswordMatch($password, $confirmPassword){

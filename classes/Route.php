@@ -41,8 +41,7 @@ class FormController extends UserAuth{
             case isset($_POST['logout']);
                 
                 $this->email = $_POST['email'];
-                $this->password = $_POST['password'];
-                $this->logout($this->email,$this->password);
+                $this->logout($this->email);
 
                 break;
             case isset($_POST['reset']);
